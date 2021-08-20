@@ -2,10 +2,22 @@ module.exports = {
   purge: ['./src/**/*.html', './src/**/*.js', './src/**/*.ts', './src/**/*.vue'],
   darkMode: false, // or 'media' or 'class'
   theme: {
-    extend: {},
+    extend: {
+
+    },
+    textColor: theme => ({
+      ...theme('colors'),
+      'main': '#cc9756',
+    }),
+    backgroundColor: theme => ({
+      ...theme('colors'),
+      'main': '#cc9756',
+    })
   },
   variants: {
-    extend: {},
+    extend: {
+      ringColor: ['hover', 'active'],
+    },
   },
   plugins: [],
 };

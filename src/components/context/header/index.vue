@@ -1,6 +1,6 @@
 <template lang="">
   <header class="bg-gray-500 text-sm">
-    <section class="flex justify-between h-full items-center">
+    <section class="flex main-w mx-auto justify-between h-full items-center">
       <div class="underline text-yellow-500">因事件（疫情、特大暴雨）影响，部分地区无法配送公告</div>
       <div class="flex px-10">
         <div class="relative inline-block text-left mr-3">
