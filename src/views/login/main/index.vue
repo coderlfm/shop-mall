@@ -6,13 +6,13 @@
           <div class="bg-yellow-100 text-sm py-2 px-6">京东不会以任何理由要求您转账汇款，谨防诈骗。</div>
           <div class="grid grid-cols-2 divide-x divide-black divide-opacity-25 h-14 items-center text-lg font-black">
             <div
-              :class="{ 'hover:text-red-600': true, 'text-red-600': formType === 'login' }"
+              :class="{ 'hover:text-red-600': true, 'cursor-pointer': true, 'text-red-600': formType === 'login' }"
               @click="formType = 'login'"
             >
               账户登陆
             </div>
             <div
-              :class="{ 'hover:text-red-600': true, 'text-red-600': formType === 'register' }"
+              :class="{ 'hover:text-red-600': true, 'cursor-pointer': true, 'text-red-600': formType === 'register' }"
               @click="formType = 'register'"
             >
               账户注册
