@@ -27,8 +27,8 @@
         <div class="p-3">
           <p>{{ item.title }}</p>
           <p class="font-bold">
-            <span class="text-red-500 mr-5">￥{{ item.marketPrice }}</span>
-            <span class="text-gray-600 line-through text-opacity-50">￥{{ item.discountPrice }}</span>
+            <span class="text-red-500 mr-5">￥{{ item.discountPrice }}</span>
+            <span class="text-gray-600 line-through text-opacity-50">￥{{ item.marketPrice }}</span>
           </p>
           <p class="text-right text-sm text-gray-500">已售 {{ item.sum }}</p>
         </div>

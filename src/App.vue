@@ -1,7 +1,7 @@
 <template>
   <Header />
   <div class="main-content">
-    <main class="main-w mx-auto">
+    <main class="main-w mx-auto overflow-hidden">
       <router-view />
     </main>
   </div>

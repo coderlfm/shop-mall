@@ -1,4 +1,4 @@
-import Request from '../index';
+import Request from '../reqeust';
 
 import { ILogin, IRegister, IDataType, ILoginResult } from './type';
 
