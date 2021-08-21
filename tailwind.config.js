@@ -15,6 +15,7 @@ module.exports = {
   variants: {
     extend: {
       ringColor: ['hover', 'active'],
+      invisible: ['hover', 'group-hover'],
     },
   },
   plugins: [],

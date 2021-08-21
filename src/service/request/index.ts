@@ -7,14 +7,14 @@ const DEAFULT_LOADING = true;
 class Request {
   instance: AxiosInstance;
   interceptors?: RequestInterceptors;
-  showLoading: boolean;
+  // showLoading: boolean;
 
   constructor(config: RequestConfig) {
     // 创建axios实例
     this.instance = axios.create(config);
 
     // 保存基本信息
-    this.showLoading = config.showLoading ?? DEAFULT_LOADING;
+    // this.showLoading = config.showLoading ?? DEAFULT_LOADING;
     this.interceptors = config.interceptors;
 
     // 使用拦截器
@@ -31,13 +31,13 @@ class Request {
     // 2.添加所有的实例都有的拦截器
     this.instance.interceptors.request.use(
       (config) => {
-        if (this.showLoading) {
-          // this.loading = ElLoading.service({
-          //   lock: true,
-          //   text: '正在请求数据....',
-          //   background: 'rgba(0, 0, 0, 0.5)',
-          // });
-        }
+        // if (this.showLoading) {
+        //   // this.loading = ElLoading.service({
+        //   //   lock: true,
+        //   //   text: '正在请求数据....',
+        //   //   background: 'rgba(0, 0, 0, 0.5)',
+        //   // });
+        // }
         return config;
       },
       (err) => {
@@ -51,8 +51,8 @@ class Request {
         // this.loading?.close();
 
         const data = res.data;
-        if (data.returnCode === '-1001') {
-          console.log('请求失败~, 错误信息');
+        if (data.code) {
+          console.log('请求失败~, 错误信息', data);
         } else {
           return data;
         }
@@ -78,9 +78,9 @@ class Request {
       }
 
       // 2.判断是否需要显示loading
-      if (config.showLoading === false) {
-        this.showLoading = config.showLoading;
-      }
+      // if (config.showLoading === false) {
+      //   this.showLoading = config.showLoading;
+      // }
 
       this.instance
         .request<any, T>(config)
@@ -90,14 +90,14 @@ class Request {
             res = config.interceptors.responseInterceptor(res);
           }
           // 2.将showLoading设置true, 这样不会影响下一个请求
-          this.showLoading = DEAFULT_LOADING;
+          // this.showLoading = DEAFULT_LOADING;
 
           // 3.将结果resolve返回出去
           resolve(res);
         })
         .catch((err) => {
           // 将showLoading设置true, 这样不会影响下一个请求
-          this.showLoading = DEAFULT_LOADING;
+          // this.showLoading = DEAFULT_LOADING;
           reject(err);
           return err;
         });

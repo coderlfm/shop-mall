@@ -2,15 +2,18 @@
   <header class="bg-gray-500 text-sm">
     <section class="flex main-w mx-auto justify-between h-full items-center">
       <div class="underline text-yellow-500">因事件（疫情、特大暴雨）影响，部分地区无法配送公告</div>
-      <div class="flex px-10">
-        <div class="relative inline-block text-left mr-3">
+      <div class="flex px-10 text-white">
+        <div
+          class="group relative inline-block text-left mr-3"
+          @mousemove="changeMenuVisibile(true)"
+          @mouseleave="changeMenuVisibile(false)"
+        >
           <div>
-            <button id="options-menu" type="button" class="text-sm font-medium text-gray-700 hover:underline">
-              我的
-            </button>
+            <button id="options-menu" type="button" class="text-sm font-medium hover:underline">我的</button>
           </div>
           <div
-            class="
+            :class="[
+              `group-hover:visible
               origin-top-right
               absolute
               right-0
@@ -20,7 +23,9 @@
               shadow-lg
               bg-white
               ring-1 ring-black ring-opacity-5
-            "
+              z-10`,
+              menusVisbile ? 'visible' : 'invisible',
+            ]"
           >
             <div class="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
               <a
@@ -37,12 +42,21 @@
             </div>
           </div>
         </div>
-        <div>APP</div>
+        <div>我的订单</div>
       </div>
     </section>
   </header>
 </template>
 <script lang="ts" setup>
+import { ref } from 'vue';
+
+const menusVisbile = ref<true | false>(false);
+
+const changeMenuVisibile = (visibile: true | false) => {
+  console.log('visibile', visibile);
+  menusVisbile.value = visibile;
+};
+
 const menus = [{ title: '我的订单' }, { title: '我的资料' }, { title: '收货地址' }];
 </script>
 <style lang="less" scoped>

@@ -3,16 +3,25 @@
     <div class="login-content h-full flex flex-row-reverse items-center mr-28">
       <div class="login-form-warp bg-white">
         <section class="flex-col">
-          <div class="bg-yellow-100 text-sm py-2 px-6">京东不会以任何理由要求您转账汇款，谨防诈骗。</div>
-          <div class="grid grid-cols-2 divide-x divide-black divide-opacity-25 h-14 items-center text-lg font-black">
+          <div class="bg-yellow-100 text-sm py-2 px-6">网易严选不会以任何理由要求您转账汇款，谨防诈骗。</div>
+          <div
+            class="
+              grid grid-cols-2
+              divide-x divide-black divide-opacity-25
+              h-14
+              items-center
+              text-lg text-center
+              font-black
+            "
+          >
             <div
-              :class="{ 'hover:text-red-600': true, 'cursor-pointer': true, 'text-red-600': formType === 'login' }"
+              :class="{ 'hover:text-main': true, 'cursor-pointer': true, 'text-main': formType === 'login' }"
               @click="formType = 'login'"
             >
               账户登陆
             </div>
             <div
-              :class="{ 'hover:text-red-600': true, 'cursor-pointer': true, 'text-red-600': formType === 'register' }"
+              :class="{ 'hover:text-main': true, 'cursor-pointer': true, 'text-main': formType === 'register' }"
               @click="formType = 'register'"
             >
               账户注册
@@ -85,9 +94,9 @@
                   class="
                     py-2
                     mb-4
-                    bg-red-600
-                    houver:bg-red-600
-                    focus:ring-red-500 focus:ring-offset-red-200
+                    bg-main
+                    houver:bg-main
+                    focus:ring-main focus:ring-offset-red-200
                     text-white
                     w-full
                     transition
@@ -110,14 +119,23 @@
       </div>
     </div>
   </main>
+  <p>
+    关于我们 | 联系我们 | 人才招聘 | 商家入驻 | 广告服务 | 手机京东 | 友情链接 | 销售联盟 | 京东社区 | 京东公益 |
+    English Site Copyright © 2004-2021 京东JD.com 版权所有
+  </p>
 </template>
 <script lang="ts" setup>
 import { ref, reactive, watch } from 'vue';
+import { useRouter } from 'vue-router';
+import { useStore } from 'vuex';
+
 import { UserIcon, UserCircleIcon, LockClosedIcon, PhoneIcon } from '@heroicons/vue/outline';
 import { loginApi, registerApi } from '@/service/login/index';
 
 import { loginFormType, registerFormType, formListType } from './types';
 
+const history = useRouter();
+const store = useStore();
 const formType = ref<'login' | 'register'>('login'); // 表单类型
 
 const loginForm = reactive<loginFormType>([
@@ -154,18 +172,22 @@ const handleLogin = async (values: any) => {
   const { code, data } = await loginApi(values as any);
   if (code) return;
   localStorage.setItem('token', data.token);
+  await store.dispatch('changeUserInfoAction');
+  history.push('/');
 };
 
 const handleRegister = async (values: any) => {
   const { code, data } = await registerApi(values as any);
   if (code) return;
   localStorage.setItem('token', data.token);
+  await store.dispatch('changeUserInfoAction');
+  history.push('/');
 };
 </script>
 
 <style lang="less" scoped>
 .login-main {
-  height: 475px;
+  height: 575px;
   background: #e93854;
   // background: #ccc;
   .login-content {

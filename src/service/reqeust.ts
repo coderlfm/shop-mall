@@ -1,8 +1,8 @@
 // service统一出口
-import HYRequest from './request';
+import BaseRequest from './request';
 import { BASE_URL, TIME_OUT } from './request/config';
 
-const hyRequest = new HYRequest({
+const Request = new BaseRequest({
   baseURL: BASE_URL,
   timeout: TIME_OUT,
   interceptors: {
@@ -26,4 +26,4 @@ const hyRequest = new HYRequest({
   },
 });
 
-export default hyRequest;
+export default Request;
