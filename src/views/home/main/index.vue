@@ -1,9 +1,5 @@
 <template lang="">
-  <div class="main-content pt-20">
-    <main class="main-w mx-auto">
-      <CategorySection :category="item" v-for="item in categories" :key="item.id" />
-    </main>
-  </div>
+  <CategorySection :category="item" v-for="item in categories" :key="item.id" />
 </template>
 <script lang="ts" setup>
 import { ref, onMounted } from 'vue';
@@ -30,8 +26,4 @@ onMounted(async () => {
   data.forEach((item: any) => getProductsByCateryId(item.id));
 });
 </script>
-<style lang="less" scoped>
-.main-content {
-  background-color: #f5f5f5;
-}
-</style>
+<style lang="less" scoped></style>

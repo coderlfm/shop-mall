@@ -56,7 +56,7 @@ const handleNext = () => {
 
 const changeCurrentIndex = (index: number) => {
   currentIndex.value = index;
-  console.log(index);
+  // console.log(index);
 };
 
 onMounted(() => {

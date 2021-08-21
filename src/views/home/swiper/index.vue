@@ -13,7 +13,6 @@ const bannerList = ref<any>([]); // banner 列表
 onMounted(async () => {
   const result = await bannerApi();
   bannerList.value = result.data;
-  console.log(bannerList.value);
 });
 </script>
 <style lang=""></style>

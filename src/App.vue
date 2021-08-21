@@ -1,8 +1,16 @@
 <template>
-  <!-- <div id="nav">
-    <router-link to="/login">Login</router-link>
-  </div> -->
-  <router-view />
+  <Header />
+  <div class="main-content">
+    <main class="main-w mx-auto">
+      <router-view />
+    </main>
+  </div>
 </template>
-
-<style lang="less"></style>
+<script lang="ts" setup>
+import Header from '@/components/context/header/index.vue';
+</script>
+<style lang="less" scoped>
+.main-content {
+  background-color: #f5f5f5;
+}
+</style>
