@@ -1,6 +1,6 @@
 <template lang="">
   <div class="mt-10">
-    <Swiper :bannerList="bannerList" />
+    <Swiper :banner-list="bannerList" />
   </div>
 </template>
 <script lang="ts" setup>

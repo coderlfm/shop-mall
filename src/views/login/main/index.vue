@@ -39,7 +39,7 @@
             "
           >
             <div class="">
-              <div class="flex flex-col mb-4" v-for="(item, key) in formList" :key="item.name">
+              <div v-for="(item, key) in formList" :key="item.name" class="flex flex-col mb-4">
                 <div class="flex relative">
                   <span class="rounded-l-md inline-flex items-center px-3 border-t border-l border-b border-gray-300">
                     <LockClosedIcon
@@ -51,6 +51,7 @@
                     <UserCircleIcon v-else-if="item.name === 'nickName'" class="w-5 h-5 text-gray-500" />
                   </span>
                   <input
+                    v-model="formList[key].value"
                     :type="item.type"
                     class="
                       rounded-r-lg
@@ -67,12 +68,11 @@
                       text-base
                       focus:outline-none focus:ring-2 focus:ring-red-200 focus:border-transparent
                     "
-                    v-model="formList[key].value"
                     :placeholder="item.hint"
                   />
                 </div>
               </div>
-              <div class="flex items-center mb-6" v-if="formType === 'login'">
+              <div v-if="formType === 'login'" class="flex items-center mb-6">
                 <div class="flex ml-auto">
                   <a href="#" class="inline-flex text-xs font-thin text-gray-500 sm:text-sm hover:text-gray-700">
                     忘记密码？
@@ -82,7 +82,6 @@
               <div class="flex w-full">
                 <button
                   type="submit"
-                  @click="handleSubmit"
                   class="
                     py-2
                     mb-4
@@ -100,6 +99,7 @@
                     focus:outline-none focus:ring-2 focus:ring-offset-2
                     rounded-lg
                   "
+                  @click="handleSubmit"
                 >
                   {{ formType === 'login' ? '登陆' : '注册' }}
                 </button>

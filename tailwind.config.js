@@ -2,17 +2,15 @@ module.exports = {
   purge: ['./src/**/*.html', './src/**/*.js', './src/**/*.ts', './src/**/*.vue'],
   darkMode: false, // or 'media' or 'class'
   theme: {
-    extend: {
-
-    },
-    textColor: theme => ({
+    extend: {},
+    textColor: (theme) => ({
       ...theme('colors'),
-      'main': '#cc9756',
+      main: '#cc9756',
     }),
-    backgroundColor: theme => ({
+    backgroundColor: (theme) => ({
       ...theme('colors'),
-      'main': '#cc9756',
-    })
+      main: '#cc9756',
+    }),
   },
   variants: {
     extend: {

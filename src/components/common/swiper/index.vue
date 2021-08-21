@@ -1,5 +1,5 @@
 <template lang="">
-  <nav class="overflow-hidden w-screen relative" v-if="bannerList.length">
+  <nav v-if="bannerList.length" class="overflow-hidden w-screen relative">
     <img class="absolute w-full transition duration-500" :src="bannerList[currentIndex].url" />
 
     <div class="absolute top-1/2 translate-y-1/2 slick-wrap flex w-full justify-between px-16 text-white">
@@ -13,6 +13,8 @@
 
     <ul class="slick-dots absolute left-1/2 translate-x-1/2 bottom-3 z-10 flex">
       <li
+        v-for="(item, index) in bannerList"
+        :key="item.id"
         :class="[
           'w-2 h-2 mx-2',
           'border-1 cursor-pointer ring-4 ring-transparent ring-opacity-50',
@@ -23,9 +25,7 @@
           index === currentIndex ? 'bg-yellow-500 ring-yellow-400 border-yellow-500' : 'bg-white border-gring-gray-600',
         ]"
         class=""
-        v-for="(item, index) in bannerList"
         @mousemove="changeCurrentIndex(index)"
-        :key="item.id"
       ></li>
     </ul>
   </nav>

@@ -5,7 +5,7 @@
       <div class="flex px-10">
         <div class="relative inline-block text-left mr-3">
           <div>
-            <button type="button" class="text-sm font-medium text-gray-700 hover:underline" id="options-menu">
+            <button id="options-menu" type="button" class="text-sm font-medium text-gray-700 hover:underline">
               我的
             </button>
           </div>
@@ -24,11 +24,11 @@
           >
             <div class="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
               <a
+                v-for="item in menus"
+                :key="item.title"
                 href="#"
                 class="block px-4 py-2 text-md text-gray-700 hover:bg-gray-100 hover:text-gray-900"
                 role="menuitem"
-                v-for="item in menus"
-                :key="item.title"
               >
                 <span class="flex flex-col">
                   <span> {{ item.title }} </span>
