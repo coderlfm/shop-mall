@@ -1,6 +1,8 @@
 <template>
-  <DetailCard :product="product" v-if="product" />
-  <DetailContent :product="product" v-if="product" />
+  <main class="main-w mx-auto overflow-hidden">
+    <DetailCard :product="product" v-if="product" />
+    <DetailContent :product="product" v-if="product" />
+  </main>
 </template>
 <script lang="ts" setup>
 import { ref, onMounted } from 'vue';

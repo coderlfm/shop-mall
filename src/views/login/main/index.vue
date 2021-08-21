@@ -155,6 +155,7 @@ let formList = ref<formListType>(loginForm); // 注册表单
 
 watch(formType, (newVal) => (formList.value = newVal === 'login' ? loginForm : registerForm));
 
+// 前置
 const handleSubmit = () => {
   const values: { [name: string]: string } = {};
   formList.value.forEach((item) => (values[item.name] = item.value));
@@ -168,18 +169,23 @@ const handleSubmit = () => {
   }
 };
 
+// 登录
 const handleLogin = async (values: any) => {
   const { code, data } = await loginApi(values as any);
   if (code) return;
-  localStorage.setItem('token', data.token);
-  await store.dispatch('changeUserInfoAction');
-  history.push('/');
+  successfully(data.token);
 };
 
+// 注册
 const handleRegister = async (values: any) => {
   const { code, data } = await registerApi(values as any);
   if (code) return;
-  localStorage.setItem('token', data.token);
+  successfully(data.token);
+};
+
+// 后置
+const successfully = async (token: string) => {
+  localStorage.setItem('token', token);
   await store.dispatch('changeUserInfoAction');
   history.push('/');
 };

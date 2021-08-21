@@ -1,7 +1,9 @@
 <template lang="">
   <div>
     <Swiper />
-    <HomeMain />
+    <main class="main-w mx-auto overflow-hidden">
+      <HomeMain />
+    </main>
   </div>
 </template>
 <script lang="ts" setup>

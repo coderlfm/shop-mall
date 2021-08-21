@@ -1,15 +1,18 @@
 import { createStore } from 'vuex';
 import { IRootStore } from './type';
-import { getUserInfoApi } from '@/service';
+import { getUserInfoApi, getUserAddressApi } from '@/service';
 
-export default createStore<IRootStore>({
+const store = createStore<IRootStore>({
   state: {
-    userInfo: {},
-    userAddress: {},
+    userInfo: null,
+    userAddress: null,
   },
   mutations: {
     changeUserInfo(state, payload: any) {
       state.userInfo = payload;
+    },
+    changeUserAddress(state, payload: any) {
+      state.userAddress = payload;
     },
   },
   actions: {
@@ -18,6 +21,19 @@ export default createStore<IRootStore>({
       commit('changeUserInfo', data);
       return Promise.resolve();
     },
+    async changeUserAddressAction({ commit }) {
+      const { data } = await getUserAddressApi();
+      commit('changeUserAddress', data);
+      return Promise.resolve();
+    },
   },
   modules: {},
 });
+
+export const setupStore = async () => {
+  if (!localStorage.getItem('token')) return;
+  await store.dispatch('changeUserInfoAction');
+  await store.dispatch('changeUserAddressAction');
+};
+
+export default store;
