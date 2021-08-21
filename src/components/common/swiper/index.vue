@@ -70,6 +70,7 @@ nav {
   img {
     width: 1920px;
     min-width: 1920px;
+    max-width: 1920px;
     min-height: 420px;
     left: 50%;
     top: 50%;
