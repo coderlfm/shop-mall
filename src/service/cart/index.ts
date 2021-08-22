@@ -15,17 +15,16 @@ export const addCardByIdApi: (data: { productId: number }) => Promise<IDataType>
 export const getCartListApi: () => Promise<IDataType> = () =>
   Request.get({ url: `${CartApi.cart}?page=1&pageSize=120` });
 
-export const changeCartCheckApi: (produchId: number, data: { type: string }) => Promise<IDataType> = (
-  produchId,
+// 修改商品勾选状态
+export const changeCartCheckApi: (productId: number, data: { type: string }) => Promise<IDataType> = (
+  productId,
   data,
-) => Request.post({ url: `${CartApi.cartChecked}${produchId}`, data });
+) => Request.patch({ url: `${CartApi.cartChecked}${productId}`, data });
 
-// // 获取用户地址
-// export const getUserAddressApi: () => Promise<IDataType> = () => Request.get({ url: CartApi.address });
+// 修改商品数量
+export const changeCartCountApi: (productId: number, data: { type: 'increment' | 'decrement' }) => Promise<IDataType> =
+  (productId, data) => Request.patch({ url: `${CartApi.cart}${productId}`, data });
 
-// // 添加用户地址
-// export const addUserAddressApi: (data: IAddress) => Promise<IDataType> = (data) =>
-//   Request.post({ url: CartApi.address, data });
-
-// export const removeUserAddressByIdApi: (addressId: number) => Promise<IDataType> = (addressId) =>
-//   Request.delete({ url: CartApi.address + addressId });
+// 删除商品
+export const removeCartApi: (productId: number) => Promise<IDataType> = (productId) =>
+  Request.delete({ url: `${CartApi.cart}${productId}` });

@@ -25,14 +25,21 @@
           <td>
             ￥{{ item.discountPrice }} <span class="text-gray-400 line-through">￥{{ item.marketPrice }}</span>
           </td>
-          <td>
-            <n-button size="tiny">－</n-button>{{ item.count }}
-            <n-button size="tiny"> ＋ </n-button>
+          <td class="w-20">
+            <div class="flex">
+              <n-button size="tiny" @click="hadleChangeCount(item.productId, 'decrement', item.count)"
+                ><MinusIcon class="w-3 h-3" />
+              </n-button>
+              <p class="w-8 text-center">{{ item.count }}</p>
+              <n-button size="tiny" @click="hadleChangeCount(item.productId, 'increment', item.count)"
+                ><PlusIcon class="w-3 h-3"
+              /></n-button>
+            </div>
           </td>
           <td>
             <span class="text-yellow-600">￥{{ item.totalPrice }}</span>
           </td>
-          <td>删除</td>
+          <td class="cursor-pointer hover:text-gray-500" @click="handleRemoveCart(item.productId)">删除</td>
         </tr>
       </tbody>
     </n-table>
@@ -66,23 +73,71 @@
             cursor-pointer
             hover:bg-yellow-600
           "
-          @click="handleCreateOrder"
+          @click="handlePreCreateOrder"
         >
           下单
         </div>
       </div>
     </div>
+
+    <n-modal v-model:show="addressVisibile" title="选择收货地址" preset="card" size="huge" :style="{ width: '600px' }">
+      <div v-if="addresss && addresss.length">
+        <div
+          :class="[
+            `border  mb-5 p-5 cursor-pointer hover:border-yellow-500`,
+            currentAddress === item.id ? 'border-yellow-500' : 'border-gray-300',
+          ]"
+          v-for="item in addresss"
+          :key="item.id"
+          @click="handleAddressSelect(item.id)"
+        >
+          <h3 class="flex items-center mb-2" v-if="item.isDefault === '1'">
+            <LocationMarkerIcon class="h-6 w-6 text-yellow-600 mr-2" />默认地址
+          </h3>
+          <div class="flex">
+            <div class="w-20 text-justify text-gray-500">收货人：</div>
+            {{ item.name }}
+          </div>
+          <div class="flex">
+            <div class="w-20 text-justify text-gray-500">联系方式：</div>
+            {{ item.mobile }}
+          </div>
+          <div class="flex">
+            <div class="w-20 text-justify text-gray-500">收货地址：</div>
+            {{ item.address }}
+          </div>
+        </div>
+        <div class="flex flex-row-reverse"><n-button type="primary" @click="handleCreateOrder">确认</n-button></div>
+      </div>
+      <div v-else class="border mb-5 p-5 cursor-pointer hover:border-yellow-500" @click="handleToAddress">
+        <div class="flex justify-center items-center">添加地址 <PlusIcon class="h-5 w-5 text-gray-600" /></div>
+      </div>
+    </n-modal>
   </main>
 </template>
 <script lang="ts" setup>
-import { ref, onMounted, computed } from 'vue';
+import { ref, onMounted, watch, computed } from 'vue';
+import { useStore } from 'vuex';
+import { LocationMarkerIcon, PlusIcon, MinusIcon } from '@heroicons/vue/outline';
 import { useMessage, useDialog } from 'naive-ui';
-import { getCartListApi, changeCartCheckApi, createOrderByProductIdsApi } from '@/service';
+import router from '@/router';
+import {
+  getCartListApi,
+  changeCartCheckApi,
+  createOrderByProductIdsApi,
+  changeCartCountApi,
+  removeCartApi,
+} from '@/service';
 
 const message = useMessage();
 const dialog = useDialog();
+const store = useStore();
 
 const cartList = ref<any>({ list: [], summation: {} }); //购物车列表
+const addressVisibile = ref<any>(false); // 收货地址弹出框
+const addresss = computed(() => store.state.userAddress); //地址列表
+const currentAddress = ref<any>(null); // 当前选择的地址id
+
 const checkedRowKeys = computed(() => cartList.value.list.filter((item: any) => item.checked === '1').length); // 已经勾选的商品
 
 const columns = [
@@ -104,6 +159,9 @@ const columns = [
 ];
 
 onMounted(() => getCartList());
+watch(addresss, () => (currentAddress.value = addresss.value?.find((item: any) => item.isDefault === '1').id), {
+  immediate: true,
+});
 
 // 获取购物车列表
 const getCartList = async () => {
@@ -119,20 +177,57 @@ const handleCheckedChange = async (productId: number, val: any) => {
   await getCartList();
 };
 
-// 下单
+// 修改数量
+const hadleChangeCount = async (productId: number, type: 'increment' | 'decrement', count: number) => {
+  if (type === 'decrement' && count <= 1) return message.warning('至少保留一件');
+  console.log(productId, type);
+  const { code } = await changeCartCountApi(productId, { type });
+  if (code) return;
+  await getCartList();
+};
+
+// 商品商品
+const handleRemoveCart = async (productId: number) => {
+  dialog.info({
+    title: '确认将该商品从购物车中删除吗？',
+    positiveText: '确定',
+    negativeText: '取消',
+    onPositiveClick: async () => {
+      const { code } = await removeCartApi(productId);
+      if (code) return;
+      message.success('删除成功');
+      await getCartList();
+    },
+  });
+};
+
+// 选择收货地址
+const handleAddressSelect = (addreddId: number) => (currentAddress.value = addreddId);
+
+// 跳转到收货地址
+const handleToAddress = () => router.push('/user/address');
+
+// 下单前确认地址
+const handlePreCreateOrder = async () => {
+  if (!cartList.value.list.length || !cartList.value.list.some((item: any) => item.checked === '1')) {
+    return message.warning('请先勾选商品');
+  }
+  addressVisibile.value = true;
+};
+
+// 确认下单
 const handleCreateOrder = async () => {
   dialog.info({
     title: '确认下单吗',
     positiveText: '确定',
     negativeText: '取消',
     onPositiveClick: async () => {
-      const { code } = await createOrderByProductIdsApi();
+      const { code } = await createOrderByProductIdsApi({ addressId: currentAddress.value });
       if (code) return;
       message.success('下单成功');
-      await getCartList();
-    },
-    onNegativeClick: () => {
-      // message.error('不确定');
+      addressVisibile.value = false;
+      router.push('/user/order');
+      // await getCartList();
     },
   });
 };

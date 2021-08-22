@@ -50,6 +50,9 @@
         <div class="ml-3 hover:underline">
           <router-link to="/user/order">我的订单</router-link>
         </div>
+        <div class="ml-3 hover:underline">
+          <router-link to="/cart">购物车</router-link>
+        </div>
       </div>
     </section>
   </header>

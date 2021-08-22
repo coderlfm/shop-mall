@@ -5,6 +5,7 @@ import { BASE_URL, TIME_OUT } from './request/config';
 const Request = new BaseRequest({
   baseURL: BASE_URL,
   timeout: TIME_OUT,
+  responseType: 'json',
   interceptors: {
     requestInterceptor: (config) => {
       // 携带token的拦截
