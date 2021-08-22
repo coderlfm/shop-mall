@@ -45,6 +45,7 @@
             shadow-md
             rounded-lg
           "
+          @click="handleAddCart"
         >
           加入购物车
         </button>
@@ -54,9 +55,19 @@
 </template>
 <script lang="ts" setup>
 import { defineProps } from 'vue';
-defineProps<{
+import { useMessage } from 'naive-ui';
+import { addCardByIdApi } from '@/service';
+const props = defineProps<{
   product: { [name: string]: string };
 }>();
+
+const message = useMessage();
+
+const handleAddCart = async () => {
+  const { code, msg } = await addCardByIdApi({ productId: props.product.id as any });
+  if (code) return message.warning(msg);
+  message.success('加入购物车成功');
+};
 </script>
 <style lang="less" scoped>
 .detail-card {
