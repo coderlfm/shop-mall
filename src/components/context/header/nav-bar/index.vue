@@ -41,13 +41,15 @@
                 role="menuitem"
               >
                 <span class="flex flex-col">
-                  <span> {{ item.title }} </span>
+                  <router-link :to="item.url"> {{ item.title }} </router-link>
                 </span>
               </a>
             </div>
           </div>
         </div>
-        <div class="ml-3">我的订单</div>
+        <div class="ml-3 hover:underline">
+          <router-link to="/user/order">我的订单</router-link>
+        </div>
       </div>
     </section>
   </header>
@@ -71,7 +73,11 @@ const handleTologin = () => router.push('/login');
 
 console.log('user:', user.value);
 
-const menus = [{ title: '我的订单' }, { title: '我的资料' }, { title: '收货地址' }];
+const menus = [
+  { title: '我的资料', url: '/user/profile' },
+  { title: '我的订单', url: '/user/order' },
+  { title: '收货地址', url: '/user/address' },
+];
 </script>
 <style lang="less" scoped>
 header {

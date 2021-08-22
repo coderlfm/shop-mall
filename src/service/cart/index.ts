@@ -18,11 +18,7 @@ export const getCartListApi: () => Promise<IDataType> = () =>
 export const changeCartCheckApi: (produchId: number, data: { type: string }) => Promise<IDataType> = (
   produchId,
   data,
-) => {
-  console.log(`${CartApi.cartChecked}${produchId}`, data);
-
-  return Request.post({ url: `${CartApi.cartChecked}${produchId}`, data });
-};
+) => Request.post({ url: `${CartApi.cartChecked}${produchId}`, data });
 
 // // 获取用户地址
 // export const getUserAddressApi: () => Promise<IDataType> = () => Request.get({ url: CartApi.address });

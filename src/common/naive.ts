@@ -27,6 +27,9 @@ export const themeOverrides = {
     textColorHover: '#D97706',
     textColorPressed: '#D97706',
     textColorFocus: '#D97706',
+    // colorHoverInfo: '#D97706',
+    textColorTextHoverInfo: '#D97706',
+
     borderHover: '1px solid #D97706',
     borderPressed: '1px solid #D97706',
     borderFocus: '1px solid #D97706',

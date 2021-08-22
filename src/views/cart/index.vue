@@ -10,7 +10,7 @@
     <n-table>
       <thead>
         <tr>
-          <th v-for="item in columns" :key="item.key">{{ item.title }}</th>
+          <th v-for="item in columns" :key="item.title">{{ item.title }}</th>
         </tr>
       </thead>
       <tbody>
@@ -42,16 +42,17 @@
         <span>继续购物</span>
         <span
           >共 <span class="text-yellow-500 font-bold">{{ cartList.list.length }}</span> 件商品，已选择
-          <span class="text-yellow-500 font-bold">{{ checkedRowKeys.length }}</span> 件
+          <span class="text-yellow-500 font-bold">{{ checkedRowKeys }}</span> 件
         </span>
       </div>
       <div class="flex h-full">
         <div class="flex flex-col justify-center text-gray-400">
-          <p>商品合计：￥1100.00</p>
-          <p>已优惠： -￥100.00</p>
+          <p>商品合计：￥{{ cartList.summation.totalMarketPrice }}</p>
+          <p>已优惠： -￥{{ cartList.summation.discount }}</p>
         </div>
         <div class="mx-5 flex items-center">
-          应付总额 <span class="text-yellow-500 font-bold text-lg mx-2"> ￥{{ 999.99 }}</span>
+          应付总额
+          <span class="text-yellow-500 font-bold text-lg mx-2"> ￥{{ cartList.summation.totalDiscountPrice }}</span>
         </div>
         <div
           class="
@@ -65,6 +66,7 @@
             cursor-pointer
             hover:bg-yellow-600
           "
+          @click="handleCreateOrder"
         >
           下单
         </div>
@@ -73,68 +75,69 @@
   </main>
 </template>
 <script lang="ts" setup>
-import { h, ref, onMounted } from 'vue';
-import { getCartListApi, changeCartCheckApi } from '@/service';
+import { ref, onMounted, computed } from 'vue';
+import { useMessage, useDialog } from 'naive-ui';
+import { getCartListApi, changeCartCheckApi, createOrderByProductIdsApi } from '@/service';
 
-const cartList = ref<any>({ list: [] }); //购物车列表
-const checkedRowKeys = ref<any[]>([]); // 已经勾选的商品
+const message = useMessage();
+const dialog = useDialog();
+
+const cartList = ref<any>({ list: [], summation: {} }); //购物车列表
+const checkedRowKeys = computed(() => cartList.value.list.filter((item: any) => item.checked === '1').length); // 已经勾选的商品
 
 const columns = [
-  // {
-  //   type: 'selection',
-  //   disabled(row: any, index: any) {
-  //     return row.name === 'Edward King 3';
-  //   },
-  // },
   {
     title: '商品信息',
-    key: 'product',
-    render(row: any) {
-      return h('div', { className: 'flex' }, [
-        h('img', { src: row.coverUrl, width: 98, height: 98 }),
-        h('p', null, row.title),
-      ]);
-    },
   },
   {
     title: '单价',
-    key: 'discountPrice',
   },
   {
     title: '数量',
-    key: 'count',
   },
   {
     title: '小计',
-    key: 'totalPrice',
   },
   {
     title: '操作',
-    key: '',
-    render(row: any) {
-      return h('div', { className: 'flex' }, '删除');
-    },
   },
 ];
 
 onMounted(() => getCartList());
 
+// 获取购物车列表
 const getCartList = async () => {
   const { data } = await getCartListApi();
   cartList.value = data;
+  console.log(cartList.value);
 };
 
-// const handleCheck = (rowKeys: any) => {
-//   checkedRowKeys.value = rowKeys;
-// };
-
+// 商品勾选
 const handleCheckedChange = async (productId: number, val: any) => {
-  console.log(productId, val);
   const type = val === true ? '1' : '0';
   await changeCartCheckApi(productId, { type });
   await getCartList();
 };
+
+// 下单
+const handleCreateOrder = async () => {
+  dialog.info({
+    title: '确认下单吗',
+    positiveText: '确定',
+    negativeText: '取消',
+    onPositiveClick: async () => {
+      const { code } = await createOrderByProductIdsApi();
+      if (code) return;
+      message.success('下单成功');
+      await getCartList();
+    },
+    onNegativeClick: () => {
+      // message.error('不确定');
+    },
+  });
+};
 </script>
+
 <style lang="less" scoped>
 tbody {
   img {
