@@ -1,6 +1,6 @@
 import Request from '../request';
 
-import { IDataType } from './type';
+import { IDataType, ISearchData } from './type';
 
 enum HomeApi {
   banner = '/banner',
@@ -25,14 +25,18 @@ export function categoriesApi(): Promise<IDataType<any>> {
  * @param categoryId 分类id
  * @returns
  */
-export function getProductsByCategoryIdApi({
-  categoryId,
-  page,
-  pageSize,
-}: {
-  categoryId: number;
-  page: number;
-  pageSize: number;
-}): Promise<IDataType<any>> {
-  return Request.get<IDataType>({ url: `${HomeApi.products}/${categoryId}?page=${page}&pageSize=${pageSize}` });
+export function getProductsApi(searchData: ISearchData): Promise<IDataType<any>> {
+  let url = `${HomeApi.products}?`;
+
+  type keyType = keyof ISearchData;
+  let key: keyType;
+
+  for (key in searchData) {
+    const value = searchData[key];
+    if (!value) continue;
+    url += `${key}=${value}&`;
+  }
+  url = url.slice(0, -1);
+
+  return Request.get<IDataType>({ url });
 }

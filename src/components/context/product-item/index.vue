@@ -1,6 +1,16 @@
 <template lang="">
   <div
-    class="product-item bg-white rounded-lg cursor-pointer hover:shadow-xl duration-500 transform hover:-translate-y-1"
+    class="
+      product-item
+      shadow
+      bg-white
+      rounded-lg
+      cursor-pointer
+      hover:shadow-xl
+      duration-500
+      transform
+      hover:-translate-y-1
+    "
     v-for="item in products"
     :key="item.id"
     @click="handleToDatail(item.id)"

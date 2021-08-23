@@ -3,3 +3,10 @@ export interface IDataType<T = any> {
   data: T;
   msg: string;
 }
+
+export interface ISearchData {
+  categoryId?: number;
+  keyword?: string;
+  page: number;
+  pageSize: number;
+}

@@ -159,7 +159,7 @@ const columns = [
 ];
 
 onMounted(() => getCartList());
-watch(addresss, () => (currentAddress.value = addresss.value?.find((item: any) => item.isDefault === '1').id), {
+watch(addresss, () => (currentAddress.value = addresss.value?.find((item: any) => item.isDefault === '1')?.id), {
   immediate: true,
 });
 
@@ -167,7 +167,6 @@ watch(addresss, () => (currentAddress.value = addresss.value?.find((item: any) =
 const getCartList = async () => {
   const { data } = await getCartListApi();
   cartList.value = data;
-  console.log(cartList.value);
 };
 
 // 商品勾选
@@ -180,7 +179,6 @@ const handleCheckedChange = async (productId: number, val: any) => {
 // 修改数量
 const hadleChangeCount = async (productId: number, type: 'increment' | 'decrement', count: number) => {
   if (type === 'decrement' && count <= 1) return message.warning('至少保留一件');
-  console.log(productId, type);
   const { code } = await changeCartCountApi(productId, { type });
   if (code) return;
   await getCartList();

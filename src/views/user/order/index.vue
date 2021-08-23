@@ -103,7 +103,6 @@ const handlePayment = async () => {
   message.success('订单支付成功');
   paymentVisibile.visibile = false;
   await getOrderList();
-  console.log(paymentVisibile.orderNumber);
 };
 </script>
 <style lang="less" scoped></style>

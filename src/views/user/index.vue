@@ -25,7 +25,6 @@ import { ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 
 const localtion = useRoute();
-console.log(localtion);
 
 const currentItem = ref(localtion.path);
 const menus = [

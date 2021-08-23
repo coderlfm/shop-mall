@@ -10,7 +10,7 @@
         </p>
       </div>
       <div class="grid grid-cols-2 gap-4 mt-10 text-white text-center">
-        <button
+        <!-- <button
           type="button"
           class="
             py-2
@@ -30,7 +30,7 @@
           "
         >
           立即购买
-        </button>
+        </button> -->
         <button
           type="button"
           class="

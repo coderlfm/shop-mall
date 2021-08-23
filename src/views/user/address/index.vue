@@ -39,7 +39,7 @@
       <n-form-item label="收货人" path="name"> <n-input placeholder="请输入收货人" v-model:value="model.name" /></n-form-item>
       <n-form-item label="联系方式" path="mobile"> <n-input placeholder="请输入联系方式" v-model:value="model.mobile" /></n-form-item>
       <n-form-item label="收货地址" path="address"> <n-input placeholder="请输入收货地址" v-model:value="model.address" /></n-form-item>
-      
+
       <n-form-item label="默认地址" path="isDefault">
         <n-radio-group v-model:value="model.isDefault" name="isDefault">
           <n-radio value="1">是</n-radio>
@@ -63,7 +63,7 @@
 <script lang="ts" setup>
 import { ref,reactive, computed } from 'vue';
 import { useStore } from 'vuex';
-import { NForm } from 'naive-ui'; 
+import { NForm } from 'naive-ui';
 import { useMessage, useDialog } from 'naive-ui';
 import { addUserAddressApi, removeUserAddressByIdApi, editUserAddressApi } from '@/service';
 
@@ -74,8 +74,8 @@ const store = useStore();
 const message = useMessage();
 const dialog = useDialog();
 
-const addressVisibile = reactive({ visibile: false, type: 'creat', addressId: 0 });  // 添加地址弹出框
-const formRef = ref<InstanceType<typeof NForm>>();    // formRef 
+const addressVisibile = reactive({ visibile: false, type: 'create', addressId: 0 });  // 添加地址弹出框
+const formRef = ref<InstanceType<typeof NForm>>();    // formRef
 const addresss = computed(() => store.state.userAddress);
 
 const defaultFrom = (dafaultData?:any) => dafaultData ?? ({
@@ -113,8 +113,8 @@ const handleOk = async () => {
   formRef.value?.validate(async (errors) => {
     let code
     const typeMsg = addressVisibile.type === 'create' ? '添加' : '保存';
-    
-    if (errors)  return  message.error('请输入正确后再进行提交')
+
+    if (errors) return message.error('请输入正确后再进行提交')
 
     if(addressVisibile.type === 'create'){
        code = (await addUserAddressApi(model.value)).code;
@@ -129,7 +129,7 @@ const handleOk = async () => {
     await store.dispatch('changeUserAddressAction');
 
   })
-  
+
 };
 
 // 编辑按钮

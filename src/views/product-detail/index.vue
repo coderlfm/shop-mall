@@ -14,7 +14,6 @@ import DetailContent from './detail-content/index.vue';
 const { query } = useRoute();
 const product = ref<any>(null);
 
-console.log('query:', query);
 
 onMounted(async () => {
   const { data } = await getProductDetailByIdApi(Number(query.id));

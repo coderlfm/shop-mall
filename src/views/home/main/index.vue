@@ -4,7 +4,7 @@
 <script lang="ts" setup>
 import { ref, onMounted } from 'vue';
 import { CategorySection } from '@/components/context';
-import { categoriesApi, getProductsByCategoryIdApi } from '@/service/home';
+import { categoriesApi, getProductsApi } from '@/service/home';
 
 const categories = ref<any>([]);
 
@@ -14,7 +14,7 @@ const categories = ref<any>([]);
 const getProductsByCateryId = async (categoryId: number) => {
   const {
     data: { list },
-  } = await getProductsByCategoryIdApi({ categoryId, page: 1, pageSize: 8 });
+  } = await getProductsApi({ categoryId, page: 1, pageSize: 8 });
   const category = categories.value.find((item: any) => item.id === categoryId);
   category.products = list;
 };

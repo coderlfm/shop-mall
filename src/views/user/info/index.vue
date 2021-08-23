@@ -36,8 +36,6 @@ import { uploadAvatarApi, editUserInoApi } from '@/service';
 const store = useStore();
 const message = useMessage();
 
-console.log('store.state.userAddress', store.state.userAddress);
-
 const defaultFrom = (dafaultData?: any) => dafaultData ?? { ...store.state.userInfo };
 
 const model = ref<any>(defaultFrom());

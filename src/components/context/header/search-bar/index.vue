@@ -1,6 +1,8 @@
 <template lang="">
   <div class="main-w mx-auto flex justify-between mt-10">
-    <div class="search-logo"></div>
+    <router-link to="/">
+      <div class="search-logo"></div>
+    </router-link>
     <div class="search-bar-wrap">
       <div class="relative flex items-center w-full h-full group">
         <SearchIcon class="absolute left-0 z-20 w-4 h-4 ml-4 sm:block" />
@@ -22,6 +24,7 @@
             text-gray-400
           "
           placeholder="搜索"
+          @keyup.enter="handleSearch"
         />
         <div
           class="absolute cursor-pointer right-0 h-auto px-2 py-1 mr-2 text-xs text-white bg-yellow-600 rounded-2xl"
@@ -35,17 +38,36 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 import { useMessage } from 'naive-ui';
+import { useRoute } from 'vue-router';
+
 import { SearchIcon } from '@heroicons/vue/outline';
 import router from '@/router';
 
+const localtion = useRoute();
 const message = useMessage();
-const searchVal = ref(''); // 搜索框内容
+
+const searchVal = ref<string>(''); // 搜索框内容
+
+watch(
+  localtion,
+  () => {
+    if (localtion.path !== '/search') {
+      return (searchVal.value = '');
+    }
+
+    const { keyword } = localtion.query;
+    if (keyword) searchVal.value = keyword as string;
+  },
+  {
+    immediate: true,
+  },
+);
 
 const handleSearch = () => {
   if (!searchVal.value) return message.warning('请输入内容后再进行搜索');
-  router.push('/search?search=' + searchVal.value);
+  router.push('/search?keyword=' + searchVal.value);
 };
 </script>
 <style lang="less" scoped>

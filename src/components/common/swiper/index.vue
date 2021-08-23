@@ -4,10 +4,10 @@
 
     <div class="absolute top-1/2 translate-y-1/2 slick-wrap flex w-full justify-between px-16 text-white">
       <div class="bg-main rounded-full w-10 h-10 flex items-center justify-center cursor-pointer" @click="handlePre">
-        左
+        <ChevronLeftIcon class="w-5 h-5" />
       </div>
       <div class="bg-main rounded-full w-10 h-10 flex items-center justify-center cursor-pointer" @click="handleNext">
-        右
+        <ChevronRightIcon class="w-5 h-5" />
       </div>
     </div>
 
@@ -32,6 +32,7 @@
 </template>
 <script lang="ts" setup>
 import { ref, onMounted, defineProps } from 'vue';
+import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/vue/outline';
 
 const props = defineProps<{
   bannerList: any[];

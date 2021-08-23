@@ -127,15 +127,17 @@
 <script lang="ts" setup>
 import { ref, reactive, watch } from 'vue';
 import { useRouter } from 'vue-router';
-import { useStore } from 'vuex';
+import { useMessage } from 'naive-ui';
 
+import { setupStore } from '@/store';
 import { UserIcon, UserCircleIcon, LockClosedIcon, PhoneIcon } from '@heroicons/vue/outline';
 import { loginApi, registerApi } from '@/service/login/index';
 
 import { loginFormType, registerFormType, formListType } from './types';
 
+const message = useMessage();
 const history = useRouter();
-const store = useStore();
+
 const formType = ref<'login' | 'register'>('login'); // 表单类型
 
 const loginForm = reactive<loginFormType>([
@@ -163,7 +165,7 @@ const handleSubmit = () => {
   if (formType.value === 'login') {
     handleLogin(values);
   } else {
-    if (values.password !== values.repeatPassword) return console.warn('两次密码不一致');
+    if (values.password !== values.repeatPassword) return message.warning('两次密码不一致');
     delete values.repeatPassword;
     handleRegister(values);
   }
@@ -186,7 +188,7 @@ const handleRegister = async (values: any) => {
 // 后置
 const successfully = async (token: string) => {
   localStorage.setItem('token', token);
-  await store.dispatch('changeUserInfoAction');
+  await setupStore();
   history.push('/');
 };
 </script>
