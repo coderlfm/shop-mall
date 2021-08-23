@@ -30,6 +30,7 @@ console.log(localtion);
 const currentItem = ref(localtion.path);
 const menus = [
   { url: '/user/profile', title: '个人中心' },
+  { url: '/user/info', title: '账号信息' },
   { url: '/user/address', title: '地址管理' },
   { url: '/user/order', title: '订单管理' },
 ];

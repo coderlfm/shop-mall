@@ -75,7 +75,8 @@ const changeMenuVisibile = (visibile: true | false) => {
 const handleTologin = () => router.push('/login');
 
 const menus = [
-  { title: '我的资料', url: '/user/profile' },
+  { title: '个人中心', url: '/user/profile' },
+  { title: '账号信息', url: '/user/info' },
   { title: '我的订单', url: '/user/order' },
   { title: '收货地址', url: '/user/address' },
 ];

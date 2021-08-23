@@ -1,6 +1,6 @@
 import Request from '../request';
 import { IDataType } from '../type';
-import { IAddress } from './type';
+import { IAddress, IUserEditInfo } from './type';
 
 enum UserApi {
   userInfo = 'user',
@@ -9,6 +9,10 @@ enum UserApi {
 
 // 获取用户基本信息
 export const getUserInfoApi: () => Promise<IDataType> = () => Request.get({ url: UserApi.userInfo });
+
+// 修改用户信息
+export const editUserInoApi: (data: IUserEditInfo) => Promise<IDataType> = (data) =>
+  Request.patch({ url: UserApi.userInfo, data });
 
 // 获取收货地址
 export const getUserAddressApi: () => Promise<IDataType> = () => Request.get({ url: UserApi.address });

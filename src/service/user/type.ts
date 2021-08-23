@@ -4,3 +4,9 @@ export interface IAddress {
   address: string;
   isDefault: string;
 }
+
+export interface IUserEditInfo {
+  nickName: string;
+  mobile: string;
+  avatar?: string;
+}
