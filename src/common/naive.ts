@@ -14,6 +14,13 @@ import {
   NModal,
   NRadioGroup,
   NRadioButton,
+  NForm,
+  NFormItem,
+  NRadio,
+  NInput,
+  NFormItemGi,
+  NSpace,
+  NTag,
 } from 'naive-ui';
 
 export const naive = create({
@@ -31,6 +38,14 @@ export const naive = create({
     NModal,
     NRadioGroup,
     NRadioButton,
+    NForm,
+    NFormItem,
+    NRadio,
+    NInput,
+    NCheckbox,
+    NFormItemGi,
+    NSpace,
+    NTag,
   ],
 });
 

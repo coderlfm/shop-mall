@@ -2,204 +2,145 @@
 <template lang="">
   <n-card title="收货地址" style="margin-bottom: 16px">
     <template v-slot:header-extra>
-      <n-button class="px-10 rounded-none" type="warning" @click="visibile = true" width="200">添加地址</n-button>
+      <n-button class="px-8 rounded-none" type="warning" @click="addressVisibile.visibile = true" width="200">添加地址</n-button>
     </template>
     <n-table>
-      <thead>
-        <tr>
-          <th v-for="item in thead" :key="item">{{ item }}</th>
-        </tr>
-      </thead>
+      <thead><tr><th v-for="item in thead" :key="item">{{ item }}</th></tr></thead>
       <tbody>
         <tr v-for="item in addresss" :key="item.id">
           <td class="p-5">{{ item.name }}</td>
           <td class="p-5">{{ item.address }}</td>
           <td class="p-5">{{ item.mobile }}</td>
-        
-          
           <td>
-            <a href="#" class="text-indigo-600 hover:text-indigo-700"> 编辑 </a>
-            <a href="#" class="text-indigo-600 hover:text-indigo-700" @click="handleRemoveAddress(item.id)">
+            <a href="#" class="text-indigo-600 hover:text-indigo-700" @click="hdanldePreEdit(item)"> 编辑 </a>
+            <a href="#" class="text-indigo-600 hover:text-indigo-700 mr-3" @click="handleRemoveAddress(item.id)">
               删除
             </a>
-            <span
-              v-if="item.isDefault === '1'"
-              class="
-                inline-block
-                px-3
-                py-1
-                ml-5
-                font-semibold
-                text-yellow-900
-                bg-yellow-200
-                rounded-full
-                leading-tight
-              "
-              >默认地址</span
-            >
+            <n-tag type="warning" size="small" v-if="item.isDefault === '1'" round> 默认地址 </n-tag>
           </td>
         </tr>
       </tbody>
     </n-table>
   </n-card>
-  <n-modal v-model:show="visibile">
-    <n-card style="width: 600px;" title="模态框" :bordered="false" size="huge">
-      <template #header-extra> 噢！ </template>
-      内容
-      <template #footer> 尾部 </template>
+
+  <!-- 新增/编辑地址弹出框 -->
+  <n-modal v-model:show="addressVisibile.visibile">
+    <n-card style="width: 500px;" :title="`${addressVisibile.type === 'crate' ? '新增' : '编辑' }地址`" :bordered="false" size="huge">
+      <n-form
+      :model="model"
+      :rules="rules"
+      ref="formRef"
+      label-placement="left"
+      :label-width="80"
+      :style="{
+        maxWidth: '640px'
+      }"
+    >
+      <n-form-item label="收货人" path="name"> <n-input placeholder="请输入收货人" v-model:value="model.name" /></n-form-item>
+      <n-form-item label="联系方式" path="mobile"> <n-input placeholder="请输入联系方式" v-model:value="model.mobile" /></n-form-item>
+      <n-form-item label="收货地址" path="address"> <n-input placeholder="请输入收货地址" v-model:value="model.address" /></n-form-item>
+      
+      <n-form-item label="默认地址" path="isDefault">
+        <n-radio-group v-model:value="model.isDefault" name="isDefault">
+          <n-radio value="1">是</n-radio>
+          <n-radio value="0">否</n-radio>
+        </n-radio-group>
+      </n-form-item>
+    </n-form>
+
+      <template #footer>
+        <div class="flex flex-row-reverse">
+          <n-space>
+            <n-button @click="addressVisibile.visibile = false">取消</n-button>
+            <n-button type="primary" @click="handleOk"> {{addressVisibile.type === 'crate' ? '新增' : '保存'}} </n-button>
+          </n-space>
+        </div>
+      </template>
     </n-card>
   </n-modal>
 
-
-  <!-- <div>
-    <div class="container">
-      <div>
-        <div class="flex flex-row mb-1 sm:mb-0 justify-between w-full">
-          <h2 class="text-2xl leading-tight">收货地址</h2>
-          <div class="text-end">
-            <n-button class="px-10 rounded-none" type="warning" @click="visibile = true" width="200">添加地址</n-button>
-          </div>
-        </div>
-        <div class="py-4 overflow-x-auto">
-          <div class="inline-block min-w-full shadow rounded-lg overflow-hidden">
-            <table class="min-w-full leading-normal text-sm">
-              <thead>
-                <tr class="border-b border-gray-200">
-                  <th scope="col" class="px-5 py-3 text-left font-medium" v-for="item in thead" :key="item">
-                    {{ item }}
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr class="text-gray-900 border-b border-gray-200" v-for="item in addresss" :key="item.id">
-                  <td class="p-5">{{ item.name }}</td>
-                  <td class="p-5">{{ item.address }}</td>
-                  <td class="p-5">{{ item.mobile }}</td>
-
-                  <td class="p-5">
-            
-                    <a href="#" class="text-indigo-600 hover:text-indigo-700"> 编辑 </a>
-                    <a href="#" class="text-indigo-600 hover:text-indigo-700" @click="handleRemoveAddress(item.id)">
-                      删除
-                    </a>
-                    <span
-                      v-if="item.isDefault === '1'"
-                      class="
-                        inline-block
-                        px-3
-                        py-1
-                        ml-5
-                        font-semibold
-                        text-yellow-900
-                        bg-yellow-200
-                        rounded-full
-                        leading-tight
-                      "
-                      >默认地址</span
-                    >
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-    </div>
-    <Modal :show="visibile" @onOk="handleOk" @onCancel="handleCancel" v-if="form.length">
-      <div class="flex flex-col w-full">
-        <div v-for="(item, key) in form" :key="item.name" class="flex flex-col mb-4">
-          <div class="flex relative">
-            <span class="rounded-l-md inline-flex items-center px-3 border-t border-l border-b border-gray-300">
-              <UserIcon v-if="item.name === 'name'" class="w-5 h-5 text-gray-500" />
-              <PhoneIcon v-else-if="item.name === 'mobile'" class="w-5 h-5 text-gray-500" />
-              <LocationMarkerIcon v-else class="w-5 h-5 text-gray-500" />
-            </span>
-            <input
-              v-model="form[key].value"
-              :type="item.type"
-              class="
-                rounded-r-lg
-                flex-1
-                appearance-none
-                border border-gray-300
-                w-full
-                py-2
-                px-4
-                bg-white
-                text-gray-700
-                placeholder-gray-400
-                shadow-sm
-                text-base
-                focus:outline-none focus:ring-2 focus:ring-red-200 focus:border-transparent
-              "
-              :placeholder="item.hint"
-            />
-          </div>
-        </div>
-        <div>
-          <p class="flex items-center">
-            是否默认地址
-            <label class="ml-2 inline-flex items-center cursor-pointer">
-              <input type="radio" name="isDefault" v-model="isDefault" value="0" class="h-5 w-5 text-main" />
-              <span class="ml-2 text-gray-700"> 否 </span>
-            </label>
-            <label class="ml-2 inline-flex items-center cursor-pointer">
-              <input type="radio" name="isDefault" v-model="isDefault" value="1" class="h-5 w-5 text-main" />
-              <span class="ml-2 text-gray-700"> 是 </span>
-            </label>
-          </p>
-        </div>
-      </div>
-    </Modal>
-  </div> -->
 </template>
 <script lang="ts" setup>
-import { ref, computed, reactive } from 'vue';
+import { ref,reactive, computed } from 'vue';
 import { useStore } from 'vuex';
-import { UserIcon, PhoneIcon, LocationMarkerIcon } from '@heroicons/vue/outline';
+import { NForm } from 'naive-ui'; 
 import { useMessage, useDialog } from 'naive-ui';
-import { addUserAddressApi, removeUserAddressByIdApi } from '@/service';
+import { addUserAddressApi, removeUserAddressByIdApi, editUserAddressApi } from '@/service';
 
-import { Modal } from '@/components/common';
+import { IAddress } from '@/service/user/type'
+
 
 const store = useStore();
 const message = useMessage();
 const dialog = useDialog();
 
-const visibile = ref(false); //添加地址弹出框
-const isDefault = ref('0'); // 是否默认地址
+const addressVisibile = reactive({ visibile: false, type: 'creat', addressId: 0 });  // 添加地址弹出框
+const formRef = ref<InstanceType<typeof NForm>>();    // formRef 
 const addresss = computed(() => store.state.userAddress);
 
-const defaultFrom = () => [
-  { name: 'name', type: 'text', value: '', hint: '请输入收货人' },
-  { name: 'mobile', type: 'text', value: '', hint: '请输入手机号' },
-  { name: 'address', type: 'text', value: '', hint: '请输入详细地址' },
-];
+const defaultFrom = (dafaultData?:any) => dafaultData ?? ({
+  name: '',     // 收货人姓名
+  mobile: '',   // 手机号
+  address: '',    // 收货地址
+  isDefault: '0', // 设置为默认地址
+});
 
-const form = ref(defaultFrom()); // 注册表单
+const model = ref<IAddress>(defaultFrom())
 
 const thead = ['收货人', '地址', '联系方式', '操作'];
 
+const rules = {
+  name: {
+    required: true,
+    message: '请输入姓名',
+    trigger: 'blur'
+  },
+  mobile: {
+    required: true,
+    message: '请输入电话号码',
+    trigger: ['input']
+  },
+  address: {
+    required: true,
+    message: '请输入收货地址',
+    trigger: ['input']
+  },
+};
+
 // 添加地址
 const handleOk = async () => {
-  const values: { [name: string]: string } = {};
-  form.value.forEach((item) => (values[item.name] = item.value));
-  values.isDefault = isDefault.value;
 
-  console.log('handleOk', values);
-  const { code } = await addUserAddressApi(values as any);
-  if (code) return;
-  console.log('添加成功');
-  form.value = defaultFrom();
-  visibile.value = false;
-  await store.dispatch('changeUserAddressAction');
+  formRef.value?.validate(async (errors) => {
+    let code
+    const typeMsg = addressVisibile.type === 'create' ? '添加' : '保存';
+    
+    if (errors)  return  message.error('请输入正确后再进行提交')
+
+    if(addressVisibile.type === 'create'){
+       code = (await addUserAddressApi(model.value)).code;
+    } else {
+       code = (await editUserAddressApi(addressVisibile.addressId, model.value)).code;
+    }
+
+    if (code) return;
+    addressVisibile.visibile = false;
+    model.value = defaultFrom();
+    message.success( `${typeMsg}成功`);
+    await store.dispatch('changeUserAddressAction');
+
+  })
+  
 };
 
-const handleCancel = () => {
-  console.log('handleCancel');
-  visibile.value = false;
-};
+// 编辑按钮
+const hdanldePreEdit = (defatultData:any)=>{
+  model.value = defaultFrom(defatultData);
+  addressVisibile.visibile = true;
+  addressVisibile.type = 'edit';
+  addressVisibile.addressId = defatultData.id;
+}
 
+// 删除地址
 const handleRemoveAddress = (id: number) => {
   dialog.warning({
     title: '确认删除地址吗？',

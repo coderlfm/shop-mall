@@ -35,7 +35,6 @@ const menus = [
 ];
 
 watch(localtion, () => {
-  console.log(localtion.path);
   currentItem.value = localtion.path;
 });
 </script>

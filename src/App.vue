@@ -23,7 +23,6 @@ import Header from '@/components/context/header/index.vue';
 
 const localtion = useRoute();
 setupStore();
-console.log('localtion:', localtion);
 </script>
 <style lang="less" scoped>
 .main-content {
