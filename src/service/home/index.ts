@@ -15,6 +15,7 @@ export function bannerApi(): Promise<IDataType<any>> {
   return Request.get<IDataType>({ url: HomeApi.banner });
 }
 
+// 获取分类列表
 export function categoriesApi(): Promise<IDataType<any>> {
   return Request.get<IDataType>({ url: HomeApi.categories });
 }
@@ -24,7 +25,7 @@ export function categoriesApi(): Promise<IDataType<any>> {
  * @param categoryId 分类id
  * @returns
  */
-export function getProductsByCateryIdApi({
+export function getProductsByCategoryIdApi({
   categoryId,
   page,
   pageSize,
