@@ -7,5 +7,6 @@ export * from './user';
 export * from './cart';
 export * from './order';
 export * from './pay';
+export * from './upload';
 
 export { Request };
