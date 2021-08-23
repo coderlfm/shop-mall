@@ -1,4 +1,4 @@
-import Request from '../reqeust';
+import Request from '../request';
 
 import { IDataType } from './type';
 

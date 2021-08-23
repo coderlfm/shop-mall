@@ -1,5 +1,5 @@
 // service统一出口
-import BaseRequest from './request';
+import BaseRequest from './request/index';
 import { BASE_URL, TIME_OUT } from './request/config';
 
 const Request = new BaseRequest({

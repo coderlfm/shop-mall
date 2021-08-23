@@ -1,17 +1,63 @@
+/* eslint-disable */
 <template lang="">
-  <div>
+  <n-card title="收货地址" style="margin-bottom: 16px">
+    <template v-slot:header-extra>
+      <n-button class="px-10 rounded-none" type="warning" @click="visibile = true" width="200">添加地址</n-button>
+    </template>
+    <n-table>
+      <thead>
+        <tr>
+          <th v-for="item in thead" :key="item">{{ item }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="item in addresss" :key="item.id">
+          <td class="p-5">{{ item.name }}</td>
+          <td class="p-5">{{ item.address }}</td>
+          <td class="p-5">{{ item.mobile }}</td>
+        
+          
+          <td>
+            <a href="#" class="text-indigo-600 hover:text-indigo-700"> 编辑 </a>
+            <a href="#" class="text-indigo-600 hover:text-indigo-700" @click="handleRemoveAddress(item.id)">
+              删除
+            </a>
+            <span
+              v-if="item.isDefault === '1'"
+              class="
+                inline-block
+                px-3
+                py-1
+                ml-5
+                font-semibold
+                text-yellow-900
+                bg-yellow-200
+                rounded-full
+                leading-tight
+              "
+              >默认地址</span
+            >
+          </td>
+        </tr>
+      </tbody>
+    </n-table>
+  </n-card>
+  <n-modal v-model:show="visibile">
+    <n-card style="width: 600px;" title="模态框" :bordered="false" size="huge">
+      <template #header-extra> 噢！ </template>
+      内容
+      <template #footer> 尾部 </template>
+    </n-card>
+  </n-modal>
+
+
+  <!-- <div>
     <div class="container">
       <div>
         <div class="flex flex-row mb-1 sm:mb-0 justify-between w-full">
           <h2 class="text-2xl leading-tight">收货地址</h2>
           <div class="text-end">
-            <button
-              @click="visibile = true"
-              class="px-4 py-2 text-base text-white bg-yellow-600 rounded-lg hover:bg-yellow-700"
-              type="submit"
-            >
-              添加地址
-            </button>
+            <n-button class="px-10 rounded-none" type="warning" @click="visibile = true" width="200">添加地址</n-button>
           </div>
         </div>
         <div class="py-4 overflow-x-auto">
@@ -31,12 +77,11 @@
                   <td class="p-5">{{ item.mobile }}</td>
 
                   <td class="p-5">
-                    <!-- <n-dialog-provider> -->
+            
                     <a href="#" class="text-indigo-600 hover:text-indigo-700"> 编辑 </a>
                     <a href="#" class="text-indigo-600 hover:text-indigo-700" @click="handleRemoveAddress(item.id)">
                       删除
                     </a>
-                    <!-- </n-dialog-provider> -->
                     <span
                       v-if="item.isDefault === '1'"
                       class="
@@ -106,7 +151,7 @@
         </div>
       </div>
     </Modal>
-  </div>
+  </div> -->
 </template>
 <script lang="ts" setup>
 import { ref, computed, reactive } from 'vue';
