@@ -1,24 +1,42 @@
-# tea-vue
+## 商城客户端
 
-## Project setup
-```
-pnpm install
-```
-
-### Compiles and hot-reloads for development
-```
-pnpm run serve
+## 项目启动 
+``` shell
+npm run serve
 ```
 
-### Compiles and minifies for production
-```
-pnpm run build
-```
-
-### Lints and fixes files
-```
-pnpm run lint
+## 项目构建 
+``` shell
+npm run build
 ```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+
+## 技术方案
+- vue3
+- vue-router
+- vuex
+- typescript
+- naive-ui
+- tailwindcss
+
+
+## 客户端功能
+- 登录/注册
+- 轮播/商品选购
+- 商品详情
+- 搜索商品
+  - 根据商品分类搜索
+- 购物车
+- 账号信息
+  - 修改头像
+  - 修改昵称/手机号
+- 我的地址
+  - 添加地址
+  - 编辑地址(设为默认地址)
+  - 删除地址
+- 我的订单
+  - 待支付
+  - 待发货
+  - 已发货
+  - 已取消
+  - 已完成

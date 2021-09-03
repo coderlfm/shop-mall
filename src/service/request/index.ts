@@ -59,6 +59,7 @@ class Request {
             localStorage.clear()
             window.location.href = '/login';
           }
+          (window as any).$message && (window as any).$message.warning(error.message ?? '请求超时')
           return Promise.reject(error);
         } else {
           return data;

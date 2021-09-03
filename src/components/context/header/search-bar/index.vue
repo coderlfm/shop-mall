@@ -77,11 +77,10 @@ const handleSearch = () => {
   width: 532px;
 }
 .search-logo {
-  // background-position: 0 -298px;
   height: 60px;
   width: 212px;
-  // background-image: url(../../../../assets/images/icons.webp);
-  // background-size: 100%;
-  // background: url(../../../assets/images/login-bg.png) 0px 0px no-repeat;
+  img {
+    height: 100%;
+  }
 }
 </style>

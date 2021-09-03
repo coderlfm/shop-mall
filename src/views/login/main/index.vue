@@ -187,6 +187,7 @@ const successfully = async (token: string) => {
   localStorage.setItem('token', token);
   await setupStore();
   history.push('/');
+  (window as any).$message.success('登录成功')
 };
 </script>
 
