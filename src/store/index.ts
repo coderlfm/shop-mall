@@ -36,4 +36,10 @@ export const setupStore = async () => {
   await store.dispatch('changeUserAddressAction');
 };
 
+export const resetStore = async () => {
+  localStorage.clear();
+  store.commit('changeUserInfo', null);
+  store.commit('changeUserAddress', null);
+}
+
 export default store;

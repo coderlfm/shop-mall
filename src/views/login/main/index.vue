@@ -192,7 +192,7 @@ const successfully = async (token: string) => {
 
 <style lang="less" scoped>
 .login-main {
-  height: 575px;
+  height: calc( 100vh - 60px );
   // background: #e93854;
   // background: #ccc;
   .login-content {

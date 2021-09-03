@@ -44,6 +44,14 @@
                   <router-link :to="item.url"> {{ item.title }} </router-link>
                 </span>
               </a>
+              <a
+                href="#"
+                class="block px-4 py-2 text-md text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+                role="menuitem"
+                @click="handleTologin"
+              >
+                <span class="flex flex-col">退出登录</span>
+              </a>
             </div>
           </div>
         </div>
@@ -60,6 +68,7 @@
 <script lang="ts" setup>
 import { ref, computed } from 'vue';
 import { useStore } from 'vuex';
+import { resetStore } from '@/store'
 import router from '@/router/index';
 
 const store = useStore();
@@ -72,14 +81,20 @@ const changeMenuVisibile = (visibile: true | false) => {
   menusVisbile.value = visibile;
 };
 
-const handleTologin = () => router.push('/login');
+const handleTologin = () => {
+  resetStore();
+  router.push('/login');
+}
 
 const menus = [
   { title: '个人中心', url: '/user/profile' },
   { title: '账号信息', url: '/user/info' },
   { title: '我的订单', url: '/user/order' },
   { title: '收货地址', url: '/user/address' },
+  // { title: '退出登录', url: '/login' },
 ];
+
+
 </script>
 <style lang="less" scoped>
 header {
