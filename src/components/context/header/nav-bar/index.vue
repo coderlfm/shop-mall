@@ -1,7 +1,7 @@
 <template lang="">
   <header class="bg-gray-500 text-sm">
     <section class="flex main-w mx-auto justify-between h-full items-center">
-      <div class="underline text-yellow-500">因事件（疫情、特大暴雨）影响，部分地区无法配送公告</div>
+      <div class="underline text-yellow-500"><router-link to="/" >茶叶购物商城</router-link></div>
       <div class="flex px-10 text-white h-full items-center">
         <div v-if="!user" class="cursor-pointer hover:underline" @click="handleTologin">你好，请登录</div>
         <div

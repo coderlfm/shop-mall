@@ -4,16 +4,15 @@
       <n-tabs type="line" @update:value="tabChange">
         <n-tab-pane :name="item" :tab="tabs[index]" v-for="(item, index) in Object.keys(tabs)" :key="item" />
       </n-tabs>
-      <div class="mb-5" v-for="item in orderList.list" :key="item.id">
-        <n-card :title="tabs[item.orderStatus]">
+      <div :class="['mb-5 border',item.orderStatus === '1' ? 'border-yellow-500' : 'border-gray-200' ]" v-for="item in orderList.list" :key="item.id">
+        <n-card :title="tabs[item.orderStatus]" :bordered="false">
           <header class="mb-3 flex justify-between">
             <div class="text-gray-500">
-              {{ new Date(item.createdAt).toLocaleString() }} | {{ item.snapshoot.address.name }} |
-              {{ item.snapshoot.address.mobile }} |
-              {{ item.snapshoot.address.address }}
+              {{ new Date(item.createdAt).toLocaleString() }} | {{ item.name }} |
+              {{ item.mobile }} | {{ item.address }}
             </div>
             <div>
-              应付金额： <span class="font-bold text-lg mx-2"> {{ item.totalPrice }}</span> 元
+              {{ item.orderStatus === '1' ? '应':'实' }}付金额： <span class="font-bold text-lg mx-2"> {{ item.totalPrice }}</span> 元
             </div>
           </header>
           <main class="flex justify-between">
@@ -81,8 +80,8 @@ const tabs = {
   '2': '待发货',
   '3': '已发货',
   '4': '已取消',
-  '5': '已完成(待评价)',
-  '6': '已完成',
+  '5': '已完成',
+  // '6': '已完成',
 } as any;
 
 // 切换订单列表

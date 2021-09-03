@@ -140,24 +140,6 @@ const currentAddress = ref<any>(null); // 当前选择的地址id
 
 const checkedRowKeys = computed(() => cartList.value.list.filter((item: any) => item.checked === '1').length); // 已经勾选的商品
 
-const columns = [
-  {
-    title: '商品信息',
-  },
-  {
-    title: '单价',
-  },
-  {
-    title: '数量',
-  },
-  {
-    title: '小计',
-  },
-  {
-    title: '操作',
-  },
-];
-
 onMounted(() => getCartList());
 watch(addresss, () => (currentAddress.value = addresss.value?.find((item: any) => item.isDefault === '1')?.id), {
   immediate: true,

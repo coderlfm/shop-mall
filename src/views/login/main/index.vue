@@ -3,7 +3,7 @@
     <div class="login-content h-full flex flex-row-reverse items-center mr-28">
       <div class="login-form-warp bg-white">
         <section class="flex-col">
-          <div class="bg-yellow-100 text-sm py-2 px-6">网易严选不会以任何理由要求您转账汇款，谨防诈骗。</div>
+          <div class="bg-yellow-100 text-sm py-2 px-6">茶叶严选不会以任何理由要求您转账汇款，谨防诈骗。</div>
           <div
             class="
               grid grid-cols-2
@@ -119,10 +119,7 @@
       </div>
     </div>
   </main>
-  <p>
-    关于我们 | 联系我们 | 人才招聘 | 商家入驻 | 广告服务 | 手机京东 | 友情链接 | 销售联盟 | 京东社区 | 京东公益 |
-    English Site Copyright © 2004-2021 京东JD.com 版权所有
-  </p>
+
 </template>
 <script lang="ts" setup>
 import { ref, reactive, watch } from 'vue';
@@ -196,14 +193,17 @@ const successfully = async (token: string) => {
 <style lang="less" scoped>
 .login-main {
   height: 575px;
-  background: #e93854;
+  // background: #e93854;
   // background: #ccc;
   .login-content {
-    background: url(../../../assets/images/login-bg.png) 0px 0px no-repeat;
+    background: url(../../../assets/images/login-bg.jpg) 0px 0px no-repeat;
+    background-size: cover;
+    width: 100%;
 
-    .login-form-wrap {
-      width: 346px;
-    }
   }
+    .login-form-warp {
+      // width: 346px;
+      margin-right: 200px;
+    }
 }
 </style>

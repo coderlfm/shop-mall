@@ -4,7 +4,7 @@
       <div class="search-filter flex flex-col text-sm">
         <div class="flex py-3">
           <div class="text-gray-500 w-10 mr-10 pt-1">分类:</div>
-          <section class="flex-1 flex text-gray-700">
+          <section class="flex-1 flex flex-wrap text-gray-700">
             <div v-for="item in categories" :key="item.id">
               <div
                 :class="[

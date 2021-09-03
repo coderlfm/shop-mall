@@ -1,7 +1,9 @@
 <template lang="">
   <div class="main-w mx-auto flex justify-between mt-10">
     <router-link to="/">
-      <div class="search-logo"></div>
+      <div class="search-logo">
+        <img src="@/assets/images/logo.png" />
+      </div>
     </router-link>
     <div class="search-bar-wrap">
       <div class="relative flex items-center w-full h-full group">
@@ -75,11 +77,11 @@ const handleSearch = () => {
   width: 532px;
 }
 .search-logo {
-  background-position: 0 -298px;
+  // background-position: 0 -298px;
   height: 60px;
   width: 212px;
-  background-image: url(../../../../assets/images/icons.webp);
-  background-size: 100%;
+  // background-image: url(../../../../assets/images/icons.webp);
+  // background-size: 100%;
   // background: url(../../../assets/images/login-bg.png) 0px 0px no-repeat;
 }
 </style>
