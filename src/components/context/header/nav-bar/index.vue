@@ -1,7 +1,7 @@
 <template lang="">
   <header class="bg-gray-500 text-sm">
     <section class="flex main-w mx-auto justify-between h-full items-center">
-      <div class="underline text-yellow-500"><router-link to="/" >茶叶购物商城</router-link></div>
+      <div class="underline text-yellow-500"><router-link to="/">购物商城</router-link></div>
       <div class="flex px-10 text-white h-full items-center">
         <div v-if="!user" class="cursor-pointer hover:underline" @click="handleTologin">你好，请登录</div>
         <div
@@ -68,7 +68,7 @@
 <script lang="ts" setup>
 import { ref, computed } from 'vue';
 import { useStore } from 'vuex';
-import { resetStore } from '@/store'
+import { resetStore } from '@/store';
 import router from '@/router/index';
 
 const store = useStore();
@@ -84,7 +84,7 @@ const changeMenuVisibile = (visibile: true | false) => {
 const handleTologin = () => {
   resetStore();
   router.push('/login');
-}
+};
 
 const menus = [
   { title: '个人中心', url: '/user/profile' },
@@ -93,8 +93,6 @@ const menus = [
   { title: '收货地址', url: '/user/address' },
   // { title: '退出登录', url: '/login' },
 ];
-
-
 </script>
 <style lang="less" scoped>
 header {
